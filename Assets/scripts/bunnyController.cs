@@ -9,11 +9,14 @@ public class bunnyController : MonoBehaviour {
     private Animator myAnim;
     public float bunnyJumpForce = 500f;
     private float bunnyHurtTime = -1;
+    private Collider2D myBunnyCollider;
     
 	void Start () {
         myRigidBody = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
-	}
+        myBunnyCollider = GetComponent<Collider2D>();
+
+    }
 	
 	void Update () {
         if (bunnyHurtTime == -1)
@@ -38,8 +41,22 @@ public class bunnyController : MonoBehaviour {
     {
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
+            foreach (PrefabSpawner spawner in FindObjectsOfType<PrefabSpawner>())
+            {
+                spawner.enabled = false;
+
+            }
+            foreach (MoveLeft moveLefter in FindObjectsOfType<MoveLeft>())
+            {
+                moveLefter.enabled = false;
+
+            }
+
             bunnyHurtTime = Time.time;
             myAnim.SetBool("bunnyHurt", true);
+            myRigidBody.velocity = Vector2.zero;
+            myRigidBody.AddForce(transform.up * bunnyJumpForce);
+            myBunnyCollider.enabled = false;
         }
     }
 }
