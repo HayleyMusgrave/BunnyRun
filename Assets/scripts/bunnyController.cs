@@ -26,6 +26,11 @@ public class bunnyController : MonoBehaviour {
     }
 	
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("TitleScene");
+        }
+
         if (bunnyHurtTime == -1)
         {
             if (Input.GetButtonUp("Jump") && jumpsLeft > 0)
