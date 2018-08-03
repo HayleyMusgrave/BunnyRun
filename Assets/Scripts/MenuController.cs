@@ -8,10 +8,12 @@ public class MenuController : MonoBehaviour {
 
     public GameObject audioOnIcon;
     public GameObject audioOffIcon;
+    public Text txtBestScore;
 
     void Start()
     {
         SetSoundState();
+        txtBestScore.text = PlayerPrefs.GetFloat("BestScore",0).ToString("0.0");
     }
 
     void Update()
